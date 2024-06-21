@@ -1,0 +1,34 @@
+{
+  "name": "@crfmn/device-uuid",
+  "version": "1.0.0",
+  "description": "Device ID generator (UUID)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "shx rm -rf lib/ && tsc",
+    "compile": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": {
+    "name": "Alex Craftsman",
+    "email": "alx@crf.mn",
+    "url": "https://crf.mn/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alex-Craftsman/device-uuid"
+  },
+  "bugs": {
+    "url": "https://github.com/Alex-Craftsman/device-uuid/issues",
+    "email": "alx@crf.mn"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "shx": "^0.3.4",
+    "typescript": "^5.5.2"
+  }
+}
