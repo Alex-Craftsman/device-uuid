@@ -1,129 +1,97 @@
-# @crfmn/use-audio
+# @crfmn/device-uuid
 
-A React hook for audio manipulation, providing easy audio management within your React application. This package offers an `AudioProvider` for context, an `AudioContainer` for rendering audio elements, and a `useAudio` hook for controlling audio playback.
+A TypeScript library for generating device IDs (UUIDs). This package provides a `DeviceUUID` class for creating unique identifiers based on device characteristics.
 
 ## Installation
 
 To install the package, run:
 
 ```bash
-npm install @crfmn/use-audio
+npm install @crfmn/device-uuid
 ```
 
 ## Usage
 
-### AudioProvider
+### DeviceUUID Class
 
-Wrap your component tree with `AudioProvider` to provide audio context to your components.
+The `DeviceUUID` class provides methods to generate a unique device ID based on the user agent and various device characteristics.
+
+#### Importing the Class
 
 ```tsx
-import { AudioProvider } from '@crfmn/use-audio';
-
-const App: FC = () => (
-  <AudioProvider>
-    <YourComponent />
-  </AudioProvider>
-);
+import { DeviceUUID } from '@crfmn/device-uuid';
 ```
 
-### AudioContainer
+#### Creating an Instance
 
-Use `AudioContainer` to render the audio elements managed by the context.
+You can create an instance of the `DeviceUUID` class by passing the user agent string and optional configuration options.
 
 ```tsx
-import { AudioContainer } from '@crfmn/use-audio';
-
-const YourComponent: FC = () => (
-  <div>
-    <AudioContainer />
-  </div>
-);
+const deviceUUID = new DeviceUUID(navigator.userAgent, { isMobile: true });
 ```
 
-### useAudio Hook
+#### Generating a UUID
 
-The `useAudio` hook allows you to initialize and play audio within your components.
+To generate a UUID, call the `get` method on the instance.
 
 ```tsx
-import { useAudio } from '@crfmn/use-audio';
-
-const PlayButton: FC = () => {
-  const { play, isInit } = useAudio("path/to/your/audio/file.mp3");
-
-  return (
-    <button onClick={play} disabled={!isInit}>
-      Play
-    </button>
-  );
-};
+const uuid = deviceUUID.get();
+console.log(uuid);
 ```
 
 ## Example
 
-Here is a complete example combining `AudioProvider`, `AudioContainer`, and `useAudio`:
+Here is a complete example of using the `DeviceUUID` class to generate a device UUID.
 
 ```tsx
-import React, { FC } from 'react';
-import { AudioProvider, AudioContainer, useAudio } from '@crfmn/use-audio';
+import React, { useEffect } from 'react';
+import { DeviceUUID } from '@crfmn/device-uuid';
 
-const AudioPlayer: FC = () => {
-  const { play, isInit } = useAudio("path/to/your/audio/file.mp3");
+const App = () => {
+  useEffect(() => {
+    const deviceUUID = new DeviceUUID(navigator.userAgent, { isMobile: true });
+    const uuid = deviceUUID.get();
+    console.log(uuid);
+  }, []);
 
   return (
     <div>
-      <button onClick={play} disabled={!isInit}>
-        Play
-      </button>
-      <AudioContainer />
+      <h1>Check the console for the generated UUID</h1>
     </div>
   );
 };
-
-const App: FC = () => (
-  <AudioProvider>
-    <AudioPlayer />
-  </AudioProvider>
-);
 
 export default App;
 ```
 
 ## API
 
-### AudioProvider
+### DeviceUUID
 
-`AudioProvider` is a context provider that manages the state and logic for the audio elements.
+`DeviceUUID` class provides methods for generating device UUIDs.
 
-```tsx
-<AudioProvider>
-  {children}
-</AudioProvider>
-```
+#### Constructor
 
-### AudioContainer
-
-`AudioContainer` renders the audio elements based on the audio sources provided in the context.
+The constructor takes the user agent string and an optional configuration object.
 
 ```tsx
-<AudioContainer />
+new DeviceUUID(userAgent: string, options?: DeviceUUIDOptions)
 ```
 
-### useAudio
+#### Methods
 
-`useAudio` hook provides functions to initialize and play audio.
+- `parse(source: string): Agent`: Parses the user agent string and returns an `Agent` object.
+- `get(customData?: string): string`: Generates and returns a UUID.
 
-#### Parameters
+### Interfaces
 
-- `src: string | null` - The source URL of the audio file.
+#### Agent
 
-#### Returns
+The `Agent` interface defines the structure of the object returned by the `parse` method.
 
-- `play: () => void` - Function to play the audio.
-- `isInit: boolean` - Indicates if the audio source has been initialized.
+#### DeviceUUIDOptions
 
-```ts
-const { play, isInit } = useAudio(src);
-```
+The `DeviceUUIDOptions` interface defines the optional configuration object for the `DeviceUUID` class.
 
 ## Contributing
 
